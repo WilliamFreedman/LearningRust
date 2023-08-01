@@ -20,7 +20,8 @@ fn main() {
             .read_line(&mut guess)
             .expect("Failed to read line");
 
-            let guess: u32 = match guess.trim().parse() { //trims and parses guess, matches with result enum to assign
+            let guess: u32 = match guess.trim().parse() 
+            { //trims and parses guess, matches with result enum to assign
                 Ok(num) => num,
                 Err(_) => {
                         println!("Invalid guess entered: {}Try again.",guess);
