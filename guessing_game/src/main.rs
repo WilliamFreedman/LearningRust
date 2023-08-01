@@ -10,22 +10,37 @@ fn main() {
 
     println!("Guess the number!");
 
-    println!("Please input your guess.");
+    loop {
 
-    let mut guess = String::new();
+        println!("Please input your guess.");
 
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
+        let mut guess = String::new();
 
-    let guess: u32 = guess.trim().parse().expect("Please type a number!");
-    //converts string to int, .expect handles the error case
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
 
-    match guess.cmp(&to_guess) { //.cmp returns variants of the Ordering enum, the match then compares them
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
+            let guess: u32 = match guess.trim().parse() { //trims and parses guess, matches with result enum to assign
+                Ok(num) => num,
+                Err(_) => {
+                        println!("Invalid guess entered: {}Try again.",guess);
+                        continue;
+                        },
+            };
+
+        match guess.cmp(&to_guess) { //.cmp returns variants of the Ordering enum, the match then compares them
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => 
+                {
+                    println!("You win!");
+                    break;
+                }
+        }
+
+        
+
     }
 
-    println!("You guessed: {guess}");
+    
 }
